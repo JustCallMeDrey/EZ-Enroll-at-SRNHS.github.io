@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profiling - SRNHS Enrollment</title>
+    <style>
+        /* minimalist, clean appearance */
+        body {
+            font-family: system-ui, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 480px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background: #fff;
+            border-radius: 4px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            line-height: 1.4;
+            text-align: center;
+            margin: 0 0 1.5rem;
+            color: #555;
+        }
+        form {
+            display: grid;
+            gap: 1rem;
+        }
+        label {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            border: 0;
+        }
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            background: #fafafa;
+        }
+        input:focus {
+            outline: none;
+            border-color: #888;
+        }
+        button {
+            padding: 0.75rem;
+            font-size: 1rem;
+            background-color: #1976d2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #115293;
+        }
+        .notice {
+            color: #1976d2;
+            font-weight: 500;
+            text-align: center;
+            margin-top: 1rem;
+        }
+        a {
+            color: inherit;
+            font-size: 0.9rem;
+            display: block;
+            text-align: center;
+            margin-top: 1rem;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 1.5rem; margin: 2rem auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://scontent.fmnl4-4.fna.fbcdn.net/v/t39.30808-1/317501644_113146944960105_5872527798144121117_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=100&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeGh7FYSI07huAzL1U_VKbQ27XN9PphV95ntc30-mFX3mcsWbh_lphrOxDYMfb416QsE4Ks8N6Yz6jjooL5dL52p&_nc_ohc=cJL5z3LY6wcQ7kNvwES9D9c&_nc_oc=AdmfJM0uIrzJIjg2_brfrEeIBJZeD3d-oDDDmKDJBnGKD3IV-bzUdGEYeWRrWHm8r1gztYwLVYe4GdTmw7mfQI9X&_nc_zt=24&_nc_ht=scontent.fmnl4-4.fna&_nc_gid=xa9lAMXIMNWwso3e59ijpQ&_nc_ss=8&oh=00_Afz0koYNs0jeutbfeSBANB1nAInYq6ZzuIcGHOn4_xN17A&oe=69B6860B" alt="SRNHS Logo" style="width: 100%; max-width: 200px; margin: 0 auto 1.5rem; display: block; border-radius: 4px;">
+        <h1>Student Profiling</h1>
+        <p>Please provide your basic information to proceed to enrollment.</p>
+        <form id="profileForm">
+            <label for="studentName">Student's Name</label>
+            <input type="text" id="studentName" placeholder="Student's Name" required />
+
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Email" required />
+
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" placeholder="Phone Number" required />
+
+            <button type="submit">Continue</button>
+        </form>
+        <p class="notice" id="message" style="display:none;">Profile saved. Redirecting...</p>
+        <a href="admin.html">Admin Login</a>
+    </div>
+    <script>
+        document.getElementById('profileForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const profile = {
+                studentName: document.getElementById('studentName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value
+            };
+            localStorage.setItem('studentProfile', JSON.stringify(profile));
+            document.getElementById('message').style.display = 'block';
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

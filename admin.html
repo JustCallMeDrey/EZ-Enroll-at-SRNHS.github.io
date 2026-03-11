@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - SRNHS Enrollment</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0; padding: 0;
+            background: linear-gradient(120deg, #f9f871 0%, #60a3bc 100%);
+            color: #333;
+        }
+        .container {
+            max-width: 960px;
+            margin: auto;
+            padding: 2rem;
+            background: rgba(255,255,255,0.9);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2d4059;
+            font-size: 2rem;
+        }
+        h2 {
+            color: #2d4059;
+        }
+        .login-box, .dashboard {
+            background: #fff;
+            border: 1px solid #ccc;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .login-box input {
+            width: 100%;
+            padding: 0.6rem;
+            margin: 0.5rem 0;
+            border: 2px solid #60a3bc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        .login-box input:focus {
+            outline: none;
+            border-color: #3c6382;
+            box-shadow: 0 0 5px rgba(60,99,130,0.5);
+        }
+        button {
+            padding: 0.8rem;
+            font-size: 1.1rem;
+            background-color: #3c6382;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background-color: #2d4059;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        th, td {
+            border: 1px solid #999;
+            padding: 0.5rem;
+            text-align: left;
+        }
+        th {
+            background-color: #f0f0f0;
+        }
+        tbody tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+        .hidden { display: none; }
+        @media (max-width: 600px) {
+            body { font-size: 0.95rem; }
+            .container { padding: 1rem; }
+            th, td { font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SRNHS Enrollment - Admin</h1>
+        <div class="login-box" id="loginBox">
+            <p>Please login with your credentials</p>
+            <input type="email" id="username" placeholder="Username" />
+            <input type="password" id="password" placeholder="Password" />
+            <button id="loginBtn">Login</button>
+            <p id="loginError" style="color:red; display:none;">Invalid credentials.</p>
+        </div>
+        <div class="dashboard hidden" id="dashboard">
+            <h2>Enrollments</h2>
+            <p>Total submissions: <span id="count">0</span></p>
+            <table id="submissionsTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Name</th>
+                        <th>School Year</th>
+                        <th>LRN</th>
+                        <th>Grade Level</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <button id="logoutBtn">Logout</button>
+        </div>
+    </div>
+    <script>
+        const validUser = "Sto. Rosario@gmail.com";
+        const validPass = "SRNHS2026";
+        const loginBox = document.getElementById('loginBox');
+        const dashboard = document.getElementById('dashboard');
+        const loginError = document.getElementById('loginError');
+        document.getElementById('loginBtn').addEventListener('click', () => {
+            const u = document.getElementById('username').value;
+            const p = document.getElementById('password').value;
+            if (u === validUser && p === validPass) {
+                loginError.style.display = 'none';
+                loginBox.classList.add('hidden');
+                dashboard.classList.remove('hidden');
+                renderSubmissions();
+            } else {
+                loginError.style.display = 'block';
+            }
+        });
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            dashboard.classList.add('hidden');
+            loginBox.classList.remove('hidden');
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        });
+        function getSubmissions() {
+            const data = localStorage.getItem('enrollments');
+            return data ? JSON.parse(data) : [];
+        }
+        function renderSubmissions() {
+            const subs = getSubmissions();
+            const tbody = document.querySelector('#submissionsTable tbody');
+            tbody.innerHTML = '';
+            subs.forEach((s, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${new Date(s.date).toLocaleString()}</td>` +
+                               `<td>${s.fullName || ''}</td>` +
+                               `<td>${s.schoolYear || ''}</td>` +
+                               `<td>${s.lrn || ''}</td>` +
+                               `<td>${s.gradeLevel || ''}</td>` +
+                               `<td>${s.status || 'pending'}</td>` +
+                               `<td>${s.status === 'pending' ? `<button onclick='acceptSubmission(${idx})'>Accept</button> <button onclick='rejectSubmission(${idx})'>Reject</button>` : ''}</td>` +
+                               `<td><button onclick='showDetails(${idx})'>View</button></td>`;
+                tbody.appendChild(tr);
+            });
+            document.getElementById('count').textContent = subs.length;
+        }
+        function acceptSubmission(idx) {
+            const subs = getSubmissions();
+            subs[idx].status = 'accepted';
+            localStorage.setItem('enrollments', JSON.stringify(subs));
+            renderSubmissions();
+        }
+        function rejectSubmission(idx) {
+            const subs = getSubmissions();
+            subs.splice(idx, 1); // Remove the rejected submission
+            localStorage.setItem('enrollments', JSON.stringify(subs));
+            renderSubmissions();
+        }
+        function showDetails(idx) {
+            const subs = getSubmissions();
+            const s = subs[idx];
+            alert(JSON.stringify(s, null, 2));
+        }
+    </script>
+</body>
+</html>

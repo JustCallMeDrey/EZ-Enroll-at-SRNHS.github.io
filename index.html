@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRNHS Enrollment Form</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0; padding: 0;
+            background: linear-gradient(120deg, #f9f871 0%, #60a3bc 100%);
+            color: #333;
+        }
+        .container {
+            max-width: 720px;
+            margin: auto;
+            padding: 2rem;
+            background: rgba(255,255,255,0.9);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2d4059;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        p {
+            line-height: 1.5;
+        }
+        form {
+            display: grid;
+            grid-gap: 1rem;
+        }
+        label {
+            font-weight: bold;
+            color: #2d4059;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 0.6rem;
+            border: 2px solid #60a3bc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #3c6382;
+            box-shadow: 0 0 5px rgba(60,99,130,0.5);
+        }
+        button {
+            padding: 0.8rem;
+            font-size: 1.1rem;
+            background-color: #3c6382;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background-color: #2d4059;
+        }
+        .notice {
+            color: #28a745;
+            font-weight: bold;
+            text-align: center;
+        }
+        a {
+            color: #3c6382;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 600px) {
+            body { font-size: 0.95rem; }
+            .container { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://scontent.fmnl4-4.fna.fbcdn.net/v/t39.30808-1/317501644_113146944960105_5872527798144121117_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=100&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeGh7FYSI07huAzL1U_VKbQ27XN9PphV95ntc30-mFX3mcsWbh_lphrOxDYMfb416QsE4Ks8N6Yz6jjooL5dL52p&_nc_ohc=cJL5z3LY6wcQ7kNvwES9D9c&_nc_oc=AdmfJM0uIrzJIjg2_brfrEeIBJZeD3d-oDDDmKDJBnGKD3IV-bzUdGEYeWRrWHm8r1gztYwLVYe4GdTmw7mfQI9X&_nc_zt=24&_nc_ht=scontent.fmnl4-4.fna&_nc_gid=xa9lAMXIMNWwso3e59ijpQ&_nc_ss=8&oh=00_Afz0koYNs0jeutbfeSBANB1nAInYq6ZzuIcGHOn4_xN17A&oe=69B6860B" alt="SRNHS Logo" style="width: 100%; max-width: 200px; margin: 0 auto 1.5rem; display: block; border-radius: 4px;">
+        <div id="profilingSection">
+            <h1>Student Profiling</h1>
+            <p>Please provide your basic information to proceed to enrollment.</p>
+            <form id="profileForm">
+                <label for="studentName">Student's Name</label>
+                <input type="text" id="studentName" required />
+
+                <label for="email">Email</label>
+                <input type="email" id="email" required />
+
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" required />
+
+                <button type="submit">Submit Profile</button>
+            </form>
+            <p class="notice" id="profileMessage" style="display:none;">Profile saved. Proceeding to enrollment...</p>
+            <p style="margin-top:1rem;text-align:center;"><a href="admin.html">Admin Login</a></p>
+        </div>
+        <div id="enrollmentSection" style="display:none;">
+            <h1>Enrollment Form</h1>
+            <p style="text-align: center;">Please fill out the basic education enrollment form below.</p>
+        <form id="enrollForm">
+            <label for="schoolYear">School Year</label>
+            <input type="text" id="schoolYear" placeholder="e.g. 2026-2027" required />
+
+            <label for="lrn">Learner Reference No.</label>
+            <input type="text" id="lrn" required />
+
+            <label for="fullName">Student's Name</label>
+            <input type="text" id="fullName" required />
+            
+            <label for="birthDate">Birth Date</label>
+            <input type="date" id="birthDate" required />
+
+            <label for="gender">Gender</label>
+            <select id="gender" required>
+                <option value="">--select--</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+            </select>
+
+            <label for="currentAddress">Current Address</label>
+            <textarea id="currentAddress" rows="2" required></textarea>
+
+            <label for="permanentAddress">Permanent Address</label>
+            <textarea id="permanentAddress" rows="2" required></textarea>
+
+            <label for="motherName">Mother's Name</label>
+            <input type="text" id="motherName" required />
+
+            <label for="fatherName">Father's Name</label>
+            <input type="text" id="fatherName" required />
+
+            <label for="lastGradeLevel">Last Grade Level</label>
+            <input type="text" id="lastGradeLevel" required />
+
+            <label for="lastYearCompleted">Last Year Level Completed</label>
+            <input type="text" id="lastYearCompleted" required />
+
+            <label for="gradeLevel">Grade Level to Enroll</label>
+            <select id="gradeLevel" required>
+                <option value="">--select--</option>
+                <option>Grade 7</option>
+                <option>Grade 8</option>
+                <option>Grade 9</option>
+                <option>Grade 10</option>
+            </select>
+
+            <button type="submit">Submit Enrollment</button>
+        </form>
+        <p class="notice" id="message" style="display:none;">Your enrollment request has been sent. Thank you!</p>
+        </div>
+    </div>
+    <script>
+        const profileData = JSON.parse(localStorage.getItem('studentProfile'));
+        if (profileData) {
+            showEnrollment();
+        } else {
+            showProfiling();
+        }
+
+        function showProfiling() {
+            document.getElementById('profilingSection').style.display = 'block';
+            document.getElementById('enrollmentSection').style.display = 'none';
+        }
+
+        function showEnrollment() {
+            document.getElementById('profilingSection').style.display = 'none';
+            document.getElementById('enrollmentSection').style.display = 'block';
+            const profileData = JSON.parse(localStorage.getItem('studentProfile'));
+            if (profileData) {
+                document.getElementById('fullName').value = profileData.studentName;
+            }
+        }
+
+        document.getElementById('profileForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const profile = {
+                studentName: document.getElementById('studentName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value
+            };
+            localStorage.setItem('studentProfile', JSON.stringify(profile));
+            document.getElementById('profileMessage').style.display = 'block';
+            setTimeout(() => {
+                showEnrollment();
+            }, 2000);
+        });
+
+        function saveSubmission(data) {
+            const existing = localStorage.getItem('enrollments');
+            const arr = existing ? JSON.parse(existing) : [];
+            arr.push(data);
+            localStorage.setItem('enrollments', JSON.stringify(arr));
+        }
+        document.getElementById('enrollForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const data = {
+                date: new Date().toISOString(),
+                status: 'pending',
+                schoolYear: document.getElementById('schoolYear').value,
+                lrn: document.getElementById('lrn').value,
+                fullName: document.getElementById('fullName').value,
+                birthDate: document.getElementById('birthDate').value,
+                gender: document.getElementById('gender').value,
+                currentAddress: document.getElementById('currentAddress').value,
+                permanentAddress: document.getElementById('permanentAddress').value,
+                motherName: document.getElementById('motherName').value,
+                fatherName: document.getElementById('fatherName').value,
+                lastGradeLevel: document.getElementById('lastGradeLevel').value,
+                lastYearCompleted: document.getElementById('lastYearCompleted').value,
+                gradeLevel: document.getElementById('gradeLevel').value
+            };
+            saveSubmission(data);
+            document.getElementById('message').style.display = 'block';
+            document.getElementById('enrollForm').reset();
+        });
+    </script>
+</body>
+</html>
